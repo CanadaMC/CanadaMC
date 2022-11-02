@@ -1,12 +1,14 @@
 package io.papermc.paper.brigadier;
 
+import static java.util.Objects.requireNonNull;
+
 import com.mojang.brigadier.Message;
+
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
+
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.NonNull;
-
-import static java.util.Objects.requireNonNull;
 
 interface PaperBrigadierProvider {
     final class Holder {
@@ -14,7 +16,8 @@ interface PaperBrigadierProvider {
     }
 
     static @NonNull PaperBrigadierProvider instance() {
-        return requireNonNull(Holder.INSTANCE, "PaperBrigadierProvider has not yet been initialized!");
+        return requireNonNull(
+                Holder.INSTANCE, "PaperBrigadierProvider has not yet been initialized!");
     }
 
     static void initialize(final @NonNull PaperBrigadierProvider instance) {
@@ -24,7 +27,9 @@ interface PaperBrigadierProvider {
         Holder.INSTANCE = instance;
     }
 
-    @NonNull Message message(@NonNull ComponentLike componentLike);
+    @NonNull
+    Message message(@NonNull ComponentLike componentLike);
 
-    @NonNull Component componentFromMessage(@NonNull Message message);
+    @NonNull
+    Component componentFromMessage(@NonNull Message message);
 }

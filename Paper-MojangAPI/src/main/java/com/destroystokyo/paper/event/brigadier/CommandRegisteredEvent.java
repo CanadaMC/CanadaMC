@@ -5,6 +5,7 @@ import com.destroystokyo.paper.brigadier.BukkitBrigadierCommandSource;
 import com.mojang.brigadier.tree.ArgumentCommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.mojang.brigadier.tree.RootCommandNode;
+
 import org.bukkit.command.Command;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
@@ -15,14 +16,15 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Fired anytime the server synchronizes Bukkit commands to Brigadier.
  *
- * <p>Allows a plugin to control the command node structure for its commands.
- * This is done at Plugin Enable time after commands have been registered, but may also
- * run at a later point in the server lifetime due to plugins, a server reload, etc.</p>
+ * <p>Allows a plugin to control the command node structure for its commands. This is done at Plugin
+ * Enable time after commands have been registered, but may also run at a later point in the server
+ * lifetime due to plugins, a server reload, etc.
  *
- * <p>This is a draft/experimental API and is subject to change.</p>
+ * <p>This is a draft/experimental API and is subject to change.
  */
 @ApiStatus.Experimental
-public class CommandRegisteredEvent<S extends BukkitBrigadierCommandSource> extends ServerEvent implements Cancellable {
+public class CommandRegisteredEvent<S extends BukkitBrigadierCommandSource> extends ServerEvent
+        implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
     private final String commandLabel;
@@ -34,7 +36,13 @@ public class CommandRegisteredEvent<S extends BukkitBrigadierCommandSource> exte
     private boolean rawCommand = false;
     private boolean cancelled = false;
 
-    public CommandRegisteredEvent(String commandLabel, BukkitBrigadierCommand<S> brigadierCommand, Command command, RootCommandNode<S> root, LiteralCommandNode<S> literal, ArgumentCommandNode<S, String> defaultArgs) {
+    public CommandRegisteredEvent(
+            String commandLabel,
+            BukkitBrigadierCommand<S> brigadierCommand,
+            Command command,
+            RootCommandNode<S> root,
+            LiteralCommandNode<S> literal,
+            ArgumentCommandNode<S, String> defaultArgs) {
         this.commandLabel = commandLabel;
         this.brigadierCommand = brigadierCommand;
         this.command = command;
@@ -53,10 +61,10 @@ public class CommandRegisteredEvent<S extends BukkitBrigadierCommandSource> exte
     }
 
     /**
-     * Gets the {@link BukkitBrigadierCommand} for the {@link Command} being registered. This can be used
-     * as the {@link com.mojang.brigadier.Command command executor} or
-     * {@link com.mojang.brigadier.suggestion.SuggestionProvider} of a {@link com.mojang.brigadier.tree.CommandNode}
-     * to delegate to the {@link Command} being registered.
+     * Gets the {@link BukkitBrigadierCommand} for the {@link Command} being registered. This can be
+     * used as the {@link com.mojang.brigadier.Command command executor} or {@link
+     * com.mojang.brigadier.suggestion.SuggestionProvider} of a {@link
+     * com.mojang.brigadier.tree.CommandNode} to delegate to the {@link Command} being registered.
      *
      * @return the {@link BukkitBrigadierCommand}
      */
@@ -83,8 +91,7 @@ public class CommandRegisteredEvent<S extends BukkitBrigadierCommandSource> exte
     }
 
     /**
-     * Gets the Bukkit APIs default arguments node (greedy string), for if
-     * you wish to reuse it.
+     * Gets the Bukkit APIs default arguments node (greedy string), for if you wish to reuse it.
      *
      * @return default arguments node
      */
@@ -102,8 +109,8 @@ public class CommandRegisteredEvent<S extends BukkitBrigadierCommandSource> exte
     }
 
     /**
-     * Sets the {@link LiteralCommandNode} used to register this command. The default literal is mutable, so
-     * this is primarily if you want to completely replace the object.
+     * Sets the {@link LiteralCommandNode} used to register this command. The default literal is
+     * mutable, so this is primarily if you want to completely replace the object.
      *
      * @param literal new node
      */
@@ -124,12 +131,11 @@ public class CommandRegisteredEvent<S extends BukkitBrigadierCommandSource> exte
     /**
      * Sets whether this command should be treated as "raw".
      *
-     * <p>A "raw" command will only use the node provided by this event for
-     * sending the command tree to the client. For execution purposes, the default
-     * greedy string execution of a standard Bukkit {@link Command} is used.</p>
+     * <p>A "raw" command will only use the node provided by this event for sending the command tree
+     * to the client. For execution purposes, the default greedy string execution of a standard
+     * Bukkit {@link Command} is used.
      *
-     * <p>On older versions of Paper, this was the default and only behavior of this
-     * event.</p>
+     * <p>On older versions of Paper, this was the default and only behavior of this event.
      *
      * @param rawCommand whether this command should be treated as "raw"
      */
@@ -137,19 +143,17 @@ public class CommandRegisteredEvent<S extends BukkitBrigadierCommandSource> exte
         this.rawCommand = rawCommand;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isCancelled() {
         return this.cancelled;
     }
 
     /**
-     * Cancels registering this command to Brigadier, but will remain in Bukkit Command Map. Can be used to hide a
-     * command from all players.
+     * Cancels registering this command to Brigadier, but will remain in Bukkit Command Map. Can be
+     * used to hide a command from all players.
      *
-     * {@inheritDoc}
+     * <p>{@inheritDoc}
      */
     @Override
     public void setCancelled(boolean cancel) {
