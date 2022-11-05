@@ -5,7 +5,7 @@
 # PRs can themselves link to Paperclip jars if it is necessary. Official such
 # PRs will take use of testing builds.
 
-name: Build Paper
+name: Build
 on: [push, pull_request]
 
 jobs:
